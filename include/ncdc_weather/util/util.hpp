@@ -4,6 +4,9 @@
 #include <algorithm>
 #include <vector>
 #include <chrono>
+#include <string>
+
+#include "ncdc_weather/time/time.hpp"
 
 namespace nwpp::util {
 
@@ -23,14 +26,12 @@ void VecFilterInPlace(std::vector<T>& vec, F filter) {
   vec.resize(vec.size() - (pt1 - pt0));
 }
 
-using Duration = decltype(std::chrono::high_resolution_clock::now() - std::chrono::high_resolution_clock::now());
-
 template<typename F>
-[[nodiscard]] Duration Bench(F lambda) {
+[[nodiscard]] time::Duration Bench(F lambda) {
   const auto start{std::chrono::high_resolution_clock::now()};
   lambda();
   const auto stop{std::chrono::high_resolution_clock::now()};
-  return stop - start;
+  return time::Duration(stop - start);
 }
 
 }  // namespace nwpp::util
