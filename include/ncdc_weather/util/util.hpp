@@ -27,11 +27,16 @@ void VecFilterInPlace(std::vector<T>& vec, F filter) {
 }
 
 template<typename F>
-[[nodiscard]] time::Duration Bench(F lambda) {
-  const auto start{std::chrono::high_resolution_clock::now()};
-  lambda();
-  const auto stop{std::chrono::high_resolution_clock::now()};
-  return time::Duration(stop - start);
+[[nodiscard]] time::Duration Bench(F lambda, const size_t repeat = 1) {
+  uint64_t res{0};
+  for (size_t i{0}; i < repeat; ++i) {
+    const auto start{std::chrono::high_resolution_clock::now()};
+    lambda();
+    const auto stop{std::chrono::high_resolution_clock::now()};
+    res += std::chrono::duration_cast<std::chrono::nanoseconds>(stop - start).count();
+  }
+  res /= repeat;
+  return {std::chrono::nanoseconds(res)};
 }
 
 }  // namespace nwpp::util

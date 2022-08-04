@@ -5,7 +5,7 @@
 #include "ncdc_weather/util/util.hpp"
 
 int main(int argc, char **argv) {
-  const nwpp::fs::LocalPath dir{"/Users/shuyang/Documents/ncdc_weather"};
+  const nwpp::fs::LocalPath dir{"/Users/shuyang/Documents/ncdc_weather/2001"};
   std::cout << "Path: \"" << dir.FullPath() << '"' << std::endl;
   std::cout << "Exists: " << dir.Exists() << std::endl;
   std::cout << "IsDir: " << dir.IsDir() << std::endl;
@@ -14,11 +14,9 @@ int main(int argc, char **argv) {
 
   std::cout << "Calculating file/dir size..." << std::endl;
   uint64_t file_size{0};
-  const auto dur_str{
-    nwpp::util::Bench([&](){
-      file_size = dir.Size();
-    }).Description()
-  };
-  std::cout << "Size: " << file_size / 1024 / 1024 << "MB" << ", time elapsed: " << dur_str << std::endl;
+  const auto dur = nwpp::util::Bench([&](){
+    file_size = dir.Size();
+  }, 10);
+  std::cout << "Size: " << file_size / 1024 / 1024 << "MB" << ", time elapsed: " << dur.Description() << std::endl;
   return 0;
 }

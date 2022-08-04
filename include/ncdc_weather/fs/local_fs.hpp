@@ -6,6 +6,7 @@
 #include <filesystem>
 #include <memory>
 #include <stdexcept>
+#include <thread>
 #include <sys/stat.h>
 
 #include "ncdc_weather/fs/i_fs.hpp"

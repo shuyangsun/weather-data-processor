@@ -46,7 +46,7 @@ class Duration {
   } {}
   ~Duration() = default;
 
-  [[nodiscard]] std::string Description() {
+  [[nodiscard]] std::string Description() const {
     double res{static_cast<double>(this->nano_sec_)};
     size_t i{0};
     while (i < DUR_CONVERSION_RATIO.size()) {
